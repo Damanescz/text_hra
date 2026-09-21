@@ -8,6 +8,8 @@ namespace ConsoleApp1
     {
         //RASY TaDYYYYYYY
         private string[] races = { "Elf", "Dwarf", "Human", "Barbarian", "Goblin" };
+        private string[] Classes = { "Mage", "Druid", "Fighter", "Rogue", "Ranger" };
+        private string[] weapons = { "Meč", "Luk", "Palice", "Hůl", "kniha", "Štít", "Nožík" };
         private string name{ get;  set; }
         public string Name 
         {
@@ -31,7 +33,7 @@ namespace ConsoleApp1
             {
                 foreach (string r in races)
                 {
-                    if (value == r)
+                    if (value.ToLower() == r.ToLower())
                     {
                         race = value;
                         return;
@@ -45,13 +47,94 @@ namespace ConsoleApp1
             }
         }
         private int age{ get; set; }
-        public int Age { get; private set; }
+        public int Age
+        {
+            get
+            {
+                return age;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    Console.WriteLine("Věk nemůže být záporný, zvolte znovu:");
+                    Age = int.Parse(Console.ReadLine());
+                }
+                else
+                {
+                    age = value;
+                }
+            }
+        }
         private string gender{ get; set; }
-        public string Gender { get; private set; }
+        public string Gender
+        {
+            get
+            {
+                return gender;
+            }
+            set
+            {
+                if (value.ToLower() == "muž" || value.ToLower() == "muz" || value.ToLower() == "žena" || value.ToLower() == "zena")
+                {
+                    gender = value;
+                }
+                else
+                {
+                    Console.WriteLine("Neplatné pohlaví, zvolte znovu:");
+                    Gender = Console.ReadLine();
+                }
+
+            }
+        }
         private string p_class { get; set; }
-        public string p_Class { get; private set; }
+        public string p_Class
+        {
+            get
+            {
+                return p_class;
+            }
+            set
+            {
+                foreach (string r in Classes)
+                {
+                    if (value.ToLower() == r.ToLower())
+                    {
+                        p_class = value;
+                        return;
+                    }
+
+                }
+
+                Console.WriteLine("Neplatná třída, zvolte znovu:");
+                p_Class = Console.ReadLine();
+
+            }
+        }
         private string weapon { get; set; }
-        public string Weapon { get; private set; }
+        public string Weapon
+        {
+            get
+            {
+                return weapon;
+            }
+            set
+            {
+                foreach (string r in weapons)
+                {
+                    if (value.ToLower() == r.ToLower())
+                    {
+                        weapon = value;
+                        return;
+                    }
+
+                }
+
+                Console.WriteLine("Neplatná zbraň, zvolte znovu:");
+                Weapon = Console.ReadLine();
+
+            }
+        }
 
 
         public void Load()
@@ -60,6 +143,7 @@ namespace ConsoleApp1
             if (postava.ReadLine() == null)
             {
                 Console.WriteLine("Nemáte žádnou postavu, musíte si vytvořit novou.");
+                postava.Close();
                 Create_Character();
             }
             // musis dodelat jak se vytvari postava
@@ -70,16 +154,35 @@ namespace ConsoleApp1
             Console.WriteLine("Jak se chcete jmenovat?:");
             Name = Console.ReadLine();
             Console.WriteLine("Jaká je vaše rasa?:");
+            foreach (string r in races)
+            {
+                Console.Write($"{r}, ");
+
+            }
             Race = Console.ReadLine();
             Console.WriteLine("Jaký je váš věk?:");
             Age = int.Parse(Console.ReadLine());
             Console.WriteLine("Jaké je vaše pohlaví?:");
             Gender = Console.ReadLine();
             Console.WriteLine("Jakou třídu si vyberete?:");
+            foreach (string r in Classes)
+            {
+                Console.Write($"{r}, ");
+
+            }
             p_Class = Console.ReadLine();
             Console.WriteLine("Jakou zbraň si vyberete?:");
+            foreach (string r in weapons)
+            {
+                Console.Write($"{r}, ");
+
+            }
             Weapon = Console.ReadLine();
-            
+            Console.WriteLine($"Vaše postava se jmenuje {Name}, je to {Race}, má {Age} let, je to {Gender}, je to {p_Class} a má zbraň {Weapon}.");
+            StreamWriter postava = new StreamWriter("Character.txt");
+            // 0xp a  potom vypoctano zbyvajici pocet zivotu ted dame 100 ale v budoucnu bude zalezet na rase, tride a věku
+            postava.WriteLine($"{Name};{Race};{Age};{Gender};{p_Class};{Weapon};0;100");
+            postava.Close();
 
         }
     }
