@@ -15,7 +15,7 @@
                 if (choice.ToLower() == "načíst" || choice.ToLower() == "nacist")
                 {
                     Console.WriteLine("nacitani");
-                    character.Load();
+                    character.Load_Character();
                 }
                 else if (choice.ToLower() == "vytvořit" || choice.ToLower() == "vytvorit")
                 {

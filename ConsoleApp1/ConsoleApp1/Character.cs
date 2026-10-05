@@ -137,15 +137,26 @@ namespace ConsoleApp1
         }
 
 
-        public void Load()
+        public void Load_Character()
         {
-            StreamReader postava = new StreamReader("Character.txt");
-            if (postava.ReadLine() == null)
+            StreamReader postavy = new StreamReader("Character.txt");
+            if (postavy.ReadLine() == null)
             {
                 Console.WriteLine("Nemáte žádnou postavu, musíte si vytvořit novou.");
-                postava.Close();
+                postavy.Close();
                 Create_Character();
             }
+            
+            postavy.Open();
+            while (postavy.ReadLine() != null)
+            {
+                Console.WriteLine("test2");
+                string[] jmeno = postavy.ReadLine().Split(';');
+                Console.WriteLine($"{jmeno[0]}");
+                break;
+             }
+            Console.WriteLine("test3");
+
             // musis dodelat jak se vytvari postava
         }
         public void Create_Character()
